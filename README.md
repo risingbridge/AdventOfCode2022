@@ -5,6 +5,6 @@ C# Dotnet6
 
 Not the most elegant or efficiant ways, but it kinda works.
 
-Stars count: 10 :star: 
+Stars count: 12 :star: 
 
 All projects have at least two input-files. debug.txt uses the example-data from the puzzle, and input.txt uses actual puzzle input.
