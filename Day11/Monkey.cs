@@ -1,7 +1,9 @@
-﻿namespace Day11;
+﻿using System.Numerics;
+
+namespace Day11;
 public class Monkey
 {
-    public Monkey(int monkeyID, List<int> items, string operation, int test, int isTrue, int isFalse)
+    public Monkey(int monkeyID, List<BigInteger> items, string operation, int test, int isTrue, int isFalse)
     {
         MonkeyID = monkeyID;
         Items = items;
@@ -12,7 +14,7 @@ public class Monkey
     }
 
     public int MonkeyID { get; set; }
-    public List<int> Items { get; set; }
+    public List<BigInteger> Items { get; set; }
     public string Operation { get; set; }
     public int Test { get; set; }
     public int IsTrue { get; set; }

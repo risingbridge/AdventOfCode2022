@@ -1,8 +1,9 @@
 ﻿//Time to ingest the input data and parse it into monkeys
 using Day11;
+using System.Numerics;
 using System.Text.RegularExpressions;
 
-List<string> input = File.ReadAllLines("./input.txt").ToList();
+List<string> input = File.ReadAllLines("./debug.txt").ToList();
 Dictionary<int, Monkey> monkeyDictionary = new Dictionary<int, Monkey>();
 
 int monkeyCounter = 0;
@@ -24,7 +25,7 @@ monkeyStrings.Clear();
 foreach (List<string> item in unparsedMonkeys)
 {
     //Parsing the starting items
-    List<int> startingItems = new List<int>();
+    List<BigInteger> startingItems = new List<BigInteger>();
     string[] startingStrings = item[1].Replace("  Starting items: ", "").Split(", ");
     foreach (var st in startingStrings)
     {
@@ -66,8 +67,8 @@ while(roundCounter < numberOfRounds)
         {
             numberOfInspectedItems++;
             //Inspects item
-            int worryLevel = monkey.Value.Items[i];
-            int newWorryLevel = worryLevel;
+            BigInteger worryLevel = monkey.Value.Items[i];
+            BigInteger newWorryLevel = worryLevel;
             string opA = monkey.Value.Operation.Split(" ")[0];
             string opB = monkey.Value.Operation.Split(" ")[1];
             string opC = monkey.Value.Operation.Split(" ")[2];
