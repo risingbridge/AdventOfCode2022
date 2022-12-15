@@ -5,7 +5,7 @@ C# Dotnet6/7
 
 Not the most elegant or efficiant ways, but it kinda works.
 
-Stars count: 17 :star: 
+Stars count: 19 :star: 
 
 All projects have at least two input-files. debug.txt uses the example-data from the puzzle, and input.txt uses actual puzzle input.
 
@@ -20,3 +20,6 @@ Day 08: 2 :star:
 Day 09: 0 :star:  
 Day 10: 2 :star:  
 Day 11: 1 :star:
+Day 12: 0 :star:
+Day 13: 0 :star:
+Day 14: 2 :star:
