@@ -19,7 +19,8 @@ Day 07: 0 :star:
 Day 08: 2 :star:  
 Day 09: 0 :star:  
 Day 10: 2 :star:  
-Day 11: 1 :star:
-Day 12: 0 :star:
-Day 13: 0 :star:
-Day 14: 2 :star:
+Day 11: 1 :star:  
+Day 12: 0 :star:  
+Day 13: 0 :star:  
+Day 14: 2 :star:  
+Day 15: 0 :star:
