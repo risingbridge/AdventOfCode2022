@@ -23,3 +23,15 @@ Day 11: 1 :star:
 Day 12: 0 :star:  
 Day 13: 0 :star:  
 Day 14: 2 :star:  
+Day 14: 0 :star:  
+Day 15: 0 :star:  
+Day 16: 0 :star:  
+Day 17: 0 :star:  
+Day 18: 0 :star:  
+Day 19: 0 :star:  
+Day 20: 0 :star:  
+Day 21: 0 :star:  
+Day 22: 0 :star:  
+Day 23: 0 :star:  
+Day 24: 0 :star:  
+Day 25: 0 :star:
