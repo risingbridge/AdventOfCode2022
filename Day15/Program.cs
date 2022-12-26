@@ -3,7 +3,7 @@ using System.Numerics;
 
 bool isDebug = false;
 
-string inputPath = "./debug.txt";
+string inputPath = "./input.txt";
 bool debugImg = false;
 if (isDebug)
 {
@@ -12,6 +12,7 @@ if (isDebug)
 }
 List<string> input = File.ReadAllLines(inputPath).ToList();
 List<Sensor> sensors = new List<Sensor>();
+List<Vector2> beaconPositions = new List<Vector2>();
 int maxX = 0;
 int maxY = 0;
 int minX = 0;
@@ -25,6 +26,7 @@ foreach (string s in input)
     string beaconString = edited.Split(":")[1];
     Vector2 sensorPos = new Vector2(int.Parse(sensorString.Split(",")[0]), int.Parse(sensorString.Split(",")[1]));
     Vector2 beaconPos = new Vector2(int.Parse(beaconString.Split(",")[0]), int.Parse(beaconString.Split(",")[1]));
+    beaconPositions.Add(beaconPos);
     Sensor sensor = new Sensor(sensorPos, beaconPos, ManhattanDistance(sensorPos, beaconPos));
     sensors.Add(sensor);
     if(sensorPos.X > maxX)
@@ -86,32 +88,79 @@ if (debugImg)
     img.Save("./test.bmp");
 }
 
-//Testing every position, to see if it is closer to a sensor then a beacon
-for (int y = minY - 1; y < maxY + 1; y++)
+
+//Loop through all the sensors and find all the positions where no beacons exists
+List<Vector2> verifiedNoBeaconPositions = new List<Vector2>();
+int sensorTestcount = 0;
+foreach (var item in sensors)
 {
-    for (int x = minX - 1; x < maxX + 1; x++)
+    sensorTestcount++;
+    Console.WriteLine($"Testing {sensorTestcount} of {sensors.Count} sensor-positions against {beaconPositions.Count} beacons. This sensor has a max distance of {item.ManhattenDistance}, " +
+        $"which gives {item.ManhattenDistance * item.ManhattenDistance} possibilities to test");
+    Vector2 currentPosition = item.Position;
+    int maxDist = item.ManhattenDistance - 1;
+    for (int y = (int)currentPosition.Y - maxDist; y <= currentPosition.Y + maxDist; y++)
     {
-        bool hasPrinted = false;
-        foreach (Sensor item in sensors)
+        for (int x = (int)currentPosition.X - maxDist - 1; x <= currentPosition.X - 1 + maxDist; x++)
         {
-            Vector2 current = new Vector2(x, y);
-            if(current == item.Position)
+            Vector2 testPos = new Vector2(x, y);
+            int manhattenToTestPos = ManhattanDistance(testPos, currentPosition);
+            if(manhattenToTestPos <= maxDist)
             {
-                Console.Write("S");
-                hasPrinted = true;
+                if (!beaconPositions.Contains(testPos))
+                {
+                    if (!verifiedNoBeaconPositions.Contains(testPos))
+                    {
+                        verifiedNoBeaconPositions.Add(testPos);
+                    }
+                }
             }
-            else if(current == item.Beacon)
-            {
-                Console.Write("B");
-                hasPrinted = true;
-            }
-        }
-        if (!hasPrinted)
-        {
-            Console.Write(".");
         }
     }
-    Console.WriteLine();
+}
+
+//Debug print to console
+//for (int y = minY - 1; y < maxY + 1; y++)
+//{
+//    for (int x = minX - 1; x < maxX + 1; x++)
+//    {
+//        Vector2 currentPos = new Vector2(x, y);
+//        if (IsSensorLocation(currentPos))
+//        {
+//            Console.ForegroundColor = ConsoleColor.Green;
+//            Console.Write("S");
+//        }
+//        else if (IsBeaconPosition(currentPos))
+//        {
+//            Console.ForegroundColor = ConsoleColor.Red;
+//            Console.Write("B");
+//        }
+//        else if (verifiedNoBeaconPositions.Contains(currentPos))
+//        {
+//            Console.Write("#");
+//        }
+//        else
+//        {
+//            Console.Write(".");
+//        }
+//        Console.ResetColor();
+//    }
+//    Console.WriteLine();
+//    //Console.WriteLine($"Done line {y} of {maxY}");
+//}
+Console.WriteLine($"Part 1: {CalculateOneRowOfNoSensors(10)}");
+
+int CalculateOneRowOfNoSensors(int row)
+{
+    int counter = 0;
+    foreach (var item in verifiedNoBeaconPositions)
+    {
+        if(item.Y == row)
+        {
+            counter++;
+        }
+    }
+    return counter;
 }
 
 int ManhattanDistance(Vector2 vector1, Vector2 vector2)
@@ -122,6 +171,29 @@ int ManhattanDistance(Vector2 vector1, Vector2 vector2)
     return distance;
 }
 
+bool IsSensorLocation(Vector2 pos)
+{
+    foreach (var item in sensors)
+    {
+        if(item.Position == pos)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool IsBeaconPosition(Vector2 pos)
+{
+    foreach (var item in sensors)
+    {
+        if (item.Beacon == pos)
+        {
+            return true;
+        }
+    }
+    return false;
+}
 
 internal class Sensor
 {
